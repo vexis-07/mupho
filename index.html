@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="charcoal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OutFix Player</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root[data-theme="charcoal"] { --bg-app: #08080a; --bg-surface: #0e0e12; --bg-card: #141419; --bg-card-hover: #1c1c24; --border: #272730; --text: #f4f4f5; --text-muted: #71717a; --accent: #3b82f6; --accent-glow: rgba(59, 130, 246, 0.4); --accent-btn: #2563eb; --accent-hover: #1d4ed8; --danger: #ef4444; }
+    :root[data-theme="amoled"] { --bg-app: #000000; --bg-surface: #050507; --bg-card: #0a0a0e; --bg-card-hover: #121218; --border: #181820; --text: #ffffff; --text-muted: #52525b; --accent: #60a5fa; --accent-glow: rgba(96, 165, 250, 0.4); --accent-btn: #3b82f6; --accent-hover: #2563eb; --danger: #dc2626; }
+    :root[data-theme="midnight"] { --bg-app: #0a0a1a; --bg-surface: #0f0f24; --bg-card: #15152e; --bg-card-hover: #1f1f3d; --border: #2a2a50; --text: #e0e0ff; --text-muted: #7070a0; --accent: #8b5cf6; --accent-glow: rgba(139, 92, 246, 0.5); --accent-btn: #7c3aed; --accent-hover: #6d28d9; --danger: #ef4444; }
+    :root[data-theme="dracula"] { --bg-app: #282a36; --bg-surface: #21222c; --bg-card: #343746; --bg-card-hover: #44475a; --border: #44475a; --text: #f8f8f2; --text-muted: #6272a4; --accent: #bd93f9; --accent-glow: rgba(189, 147, 249, 0.5); --accent-btn: #bd93f9; --accent-hover: #ff79c6; --danger: #ff5555; }
+    :root[data-theme="nord"] { --bg-app: #2e3440; --bg-surface: #3b4252; --bg-card: #434c5e; --bg-card-hover: #4c566a; --border: #4c566a; --text: #eceff4; --text-muted: #d8dee9; --accent: #88c0d0; --accent-glow: rgba(136, 192, 208, 0.5); --accent-btn: #5e81ac; --accent-hover: #81a1c1; --danger: #bf616a; }
+    :root[data-theme="monokai"] { --bg-app: #1e1f1c; --bg-surface: #272822; --bg-card: #2f302a; --bg-card-hover: #3e3d32; --border: #49483e; --text: #f8f8f2; --text-muted: #75715e; --accent: #a6e22e; --accent-glow: rgba(166, 226, 46, 0.4); --accent-btn: #a6e22e; --accent-hover: #f92672; --danger: #f92672; }
+    :root[data-theme="gruvbox"] { --bg-app: #1d2021; --bg-surface: #282828; --bg-card: #32302f; --bg-card-hover: #3c3836; --border: #504945; --text: #ebdbb2; --text-muted: #928374; --accent: #fe8019; --accent-glow: rgba(254, 128, 25, 0.45); --accent-btn: #d65d0e; --accent-hover: #b57614; --danger: #fb4934; }
+    :root[data-theme="tokyo"] { --bg-app: #1a1b26; --bg-surface: #16161e; --bg-card: #24283b; --bg-card-hover: #2f3549; --border: #414868; --text: #c0caf5; --text-muted: #565f89; --accent: #7aa2f7; --accent-glow: rgba(122, 162, 247, 0.5); --accent-btn: #7aa2f7; --accent-hover: #bb9af7; --danger: #f7768e; }
+    :root[data-theme="catppuccin"] { --bg-app: #1e1e2e; --bg-surface: #181825; --bg-card: #313244; --bg-card-hover: #45475a; --border: #585b70; --text: #cdd6f4; --text-muted: #7f849c; --accent: #cba6f7; --accent-glow: rgba(203, 166, 247, 0.5); --accent-btn: #cba6f7; --accent-hover: #f5c2e7; --danger: #f38ba8; }
+    :root[data-theme="rose"] { --bg-app: #191724; --bg-surface: #1f1d2e; --bg-card: #26233a; --bg-card-hover: #2d2a45; --border: #403d52; --text: #e0def4; --text-muted: #908caa; --accent: #eb6f92; --accent-glow: rgba(235, 111, 146, 0.5); --accent-btn: #eb6f92; --accent-hover: #c4a7e7; --danger: #eb6f92; }
+    :root[data-theme="nordic"] { --bg-app: #f1f5f9; --bg-surface: #ffffff; --bg-card: #e2e8f0; --bg-card-hover: #cbd5e1; --border: #cbd5e1; --text: #0f172a; --text-muted: #64748b; --accent: #2563eb; --accent-glow: rgba(37, 99, 235, 0.3); --accent-btn: #2563eb; --accent-hover: #1d4ed8; --danger: #ef4444; }
+    :root[data-theme="cyber"] { --bg-app: #04040a; --bg-surface: #090914; --bg-card: #0f0f20; --bg-card-hover: #181830; --border: #ff007f44; --text: #00f0ff; --text-muted: #ff007f; --accent: #00f0ff; --accent-glow: rgba(0, 240, 255, 0.5); --accent-btn: #ff007f; --accent-hover: #d9006c; --danger: #ff0055; }
+    :root[data-theme="sunset"] { --bg-app: #12080a; --bg-surface: #180a0e; --bg-card: #220e14; --bg-card-hover: #30131c; --border: #f43f5e44; --text: #fff1f2; --text-muted: #fda4af; --accent: #f43f5e; --accent-glow: rgba(244, 63, 94, 0.45); --accent-btn: #e11d48; --accent-hover: #be123c; --danger: #e11d48; }
+    :root[data-theme="emerald"] { --bg-app: #04100c; --bg-surface: #071812; --bg-card: #0b241b; --bg-card-hover: #103327; --border: #10b98144; --text: #ecfdf5; --text-muted: #6ee7b7; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.45); --accent-btn: #059669; --accent-hover: #047857; --danger: #f43f5e; }
+    :root[data-theme="ocean"] { --bg-app: #060d1a; --bg-surface: #091428; --bg-card: #0d1e3a; --bg-card-hover: #132a50; --border: #3b82f644; --text: #eff6ff; --text-muted: #93c5fd; --accent: #38bdf8; --accent-glow: rgba(56, 189, 248, 0.45); --accent-btn: #2563eb; --accent-hover: #1d4ed8; --danger: #ef4444; }
+    :root[data-theme="pastel"] { --bg-app: #0d0a18; --bg-surface: #130f24; --bg-card: #1b1532; --bg-card-hover: #261f46; --border: #8b5cf644; --text: #f5f3ff; --text-muted: #c4b5fd; --accent: #a78bfa; --accent-glow: rgba(167, 139, 250, 0.45); --accent-btn: #7c3aed; --accent-hover: #6d28d9; --danger: #f43f5e; }
+    :root[data-theme="latte"] { --bg-app: #15100e; --bg-surface: #1e1714; --bg-card: #281e1b; --bg-card-hover: #362924; --border: #f59e0b44; --text: #fffbe6; --text-muted: #fcd34d; --accent: #fbbf24; --accent-glow: rgba(251, 191, 36, 0.45); --accent-btn: #d97706; --accent-hover: #b45309; --danger: #ef4444; }
+    :root[data-theme="amber"] { --bg-app: #100b02; --bg-surface: #181103; --bg-card: #221805; --bg-card-hover: #302207; --border: #f59e0b44; --text: #fef3c7; --text-muted: #fde68a; --accent: #f59e0b; --accent-glow: rgba(245, 158, 11, 0.45); --accent-btn: #d97706; --accent-hover: #b45309; --danger: #ef4444; }
+    :root[data-theme="silver"] { --bg-app: #121215; --bg-surface: #18181c; --bg-card: #222226; --bg-card-hover: #2d2d33; --border: #52525b; --text: #fafafa; --text-muted: #a1a1aa; --accent: #e4e4e7; --accent-glow: rgba(228, 228, 231, 0.35); --accent-btn: #52525b; --accent-hover: #3f3f46; --danger: #ef4444; }
+    :root[data-theme="gold"] { --bg-app: #080b14; --bg-surface: #0c101f; --bg-card: #12182c; --bg-card-hover: #1a233d; --border: #eab30844; --text: #fef9c3; --text-muted: #fde047; --accent: #eab308; --accent-glow: rgba(234, 179, 8, 0.45); --accent-btn: #ca8a04; --accent-hover: #a16207; --danger: #ef4444; }
+    :root[data-theme="spotify"] { --bg-app: #101411; --bg-surface: #171d19; --bg-card: #202923; --bg-card-hover: #29352d; --border: #35443a; --text: #f4f7f4; --text-muted: #9aa99e; --accent: #1ed760; --accent-glow: rgba(30, 215, 96, 0.34); --accent-btn: #1db954; --accent-hover: #1ed760; --danger: #ff6b78; }
+    :root[data-theme="aurora"] { --bg-app: #10101b; --bg-surface: #171728; --bg-card: #202039; --bg-card-hover: #2b2b4b; --border: #41416a; --text: #f3f0ff; --text-muted: #aaa5cf; --accent: #8b7cff; --accent-glow: rgba(139, 124, 255, 0.4); --accent-btn: #725bff; --accent-hover: #a391ff; --danger: #ff738d; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; user-select: none; }
+    body { background: var(--bg-app); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    .app-container { display: flex; flex: 1; overflow: hidden; padding: 12px; gap: 12px; }
+    body.queue-open .app-container { padding-right: min(392px, calc(32vw + 12px)); }
+    .sidebar { width: 240px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 16px; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto; flex-shrink: 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 16px; margin-bottom: 24px; }
+    .brand-icon { width: 34px; height: 34px; background: var(--accent-btn); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 0 14px var(--accent-glow); overflow: hidden; }
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .nav-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 20px; }
+    .group-title { font-size: 10px; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; padding-left: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-add-playlist { display:inline-grid; place-items:center; border:0; background:transparent; cursor:pointer; color:var(--accent); font-size:14px; transition:transform .2s; padding:4px; }
+    .btn-add-playlist:hover { transform: scale(1.25); color: #fff; }
+    .nav-item { display:flex; align-items:center; gap:12px; padding:10px 14px; border:1px solid transparent; border-radius:10px; background:transparent; color:var(--text-muted); font:inherit; font-size:13px; font-weight:600; text-align:left; cursor:pointer; transition:all .2s; width:100%; }
+    .nav-item:hover { background: var(--bg-card-hover); color: var(--text); }
+    .nav-item.active { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+    .nav-item.drop-target { outline: 2px solid var(--accent); }
+    .theme-select { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 10px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; outline: none; cursor: pointer; width: 100%; }
+    .theme-select option { background: var(--bg-surface); color: var(--text); }
+    .content-area { flex: 1; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; padding: 22px; gap: 16px; position: relative; }
+    .view { display: none; flex-direction: column; flex: 1; gap: 16px; overflow: hidden; }
+    .view.active { display: flex; }
+    .top-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .input-box { flex: 1; display: flex; align-items: center; gap: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 16px; min-width: 200px; }
+    .input-box input { flex: 1; background: none; border: none; color: var(--text); outline: none; font-size: 13px; min-width: 0; }
+    .btn-download { padding: 11px 22px; background: var(--accent-btn); color: #fff; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.1s; flex-shrink: 0; }
+    .btn-download:active { transform: scale(0.97); }
+    .btn-download:disabled { opacity: 0.5; cursor: not-allowed; }
+    .toolbar-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .search-box { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 9px 14px; }
+    .search-box input { flex: 1; background: none; border: none; color: var(--text); outline: none; font-size: 12px; min-width: 0; }
+    .featured-card { background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%); border: 1px solid var(--border); border-radius: 18px; padding: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .featured-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .featured-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .btn-play-hero { padding: 10px 22px; background: var(--text); color: var(--bg-app); border: none; border-radius: 20px; font-weight: 800; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s; }
+    .btn-play-hero:hover { transform: scale(1.03); }
+    .featured-img { width: 100px; height: 100px; border-radius: 12px; object-fit: cover; }
+    .playlist-detail { display: none; flex: 1; min-height: 0; overflow-y: auto; flex-direction: column; gap: 22px; margin: -22px; padding: 34px 30px 24px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--bg-surface)) 0, var(--bg-surface) 340px); }
+    .playlist-hero { display: flex; align-items: flex-end; gap: 26px; min-height: 220px; }
+    .playlist-cover { width: 210px; height: 210px; object-fit: cover; border-radius: 10px; box-shadow: 0 18px 44px rgba(0,0,0,.42); flex: 0 0 auto; background: var(--bg-card); }
+    .spotify-playlist-cover { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; color: #fff; background: radial-gradient(circle at 25% 18%, #45564a 0, #202923 50%, #131914 100%); }
+    .spotify-playlist-cover i { font-size: 64px; color: #1ed760; }
+    .spotify-playlist-cover span { font-size: 13px; font-weight: 800; letter-spacing: .4px; }
+    .playlist-copy { min-width: 0; padding-bottom: 4px; }
+    .playlist-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+    .playlist-title { font-size: clamp(28px, 4vw, 54px); line-height: 1.04; font-weight: 850; letter-spacing: -1.8px; overflow-wrap: anywhere; margin-bottom: 12px; }
+    .playlist-description { color: var(--text-muted); font-size: 13px; line-height: 1.55; max-width: 660px; margin-bottom: 14px; }
+    .playlist-meta { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+    .playlist-actions { display: flex; align-items: center; gap: 12px; }
+    .playlist-action-play { border: 0; width: 54px; height: 54px; border-radius: 50%; color: #061108; background: var(--accent); font-size: 18px; cursor: pointer; box-shadow: 0 8px 24px var(--accent-glow); transition: transform .18s; }
+    .playlist-action-play:hover { transform: scale(1.06); }
+    .playlist-open-link { color: var(--text); text-decoration: none; padding: 10px 15px; border: 1px solid var(--border); border-radius: 22px; font-size: 12px; font-weight: 750; }
+    .playlist-open-link:hover { border-color: var(--accent); color: var(--accent); }
+    .spotify-embed-wrap { border-radius: 14px; overflow: hidden; background: #121212; min-height: 470px; box-shadow: 0 18px 48px rgba(0,0,0,.24); }
+    .spotify-embed-wrap iframe { display: block; width: 100%; height: 470px; border: 0; }
+    body.spotify-embed-active .player-bar { display: none; }
+    .view-library.spotify-playlist .top-header, .view-library.spotify-playlist .toolbar-row, .view-library.spotify-playlist .featured-card, .view-library.spotify-playlist .table-container { display: none; }
+    .view-library.playlist-mode .top-header, .view-library.playlist-mode .featured-card { display: none; }
+    .view-library.playlist-mode .playlist-detail { display: flex; flex: 0 0 auto; overflow: visible; }
+    .view-library.playlist-mode .toolbar-row { flex: 0 0 auto; }
+    .view-library.playlist-mode .table-container { min-height: 130px; }
+    .view-library.spotify-playlist .playlist-detail { gap: 18px; flex: 1; overflow-y: auto; }
+    .table-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    /* âœ… UPDATED: grid b 8 columns (Add + Edit + Delete) */
+    .table-head { display: grid; grid-template-columns: 35px 35px 2.5fr 1.5fr 100px 35px 35px 35px; font-size: 11px; font-weight: 800; color: var(--text-muted); padding: 0 16px 8px 16px; border-bottom: 1px solid var(--border); }
+    .track-row { display: grid; grid-template-columns: 35px 35px 2.5fr 1.5fr 100px 35px 35px 35px; align-items: center; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: 0.2s; position: relative; }
+    .track-row:hover { background: var(--bg-card-hover); border-color: var(--accent); }
+    .track-row.active { border-color: var(--accent-btn); background: var(--bg-card-hover); }
+    .track-row.missing { border-style: dashed; border-color: var(--danger); }
+    .track-row.dragging-track { opacity: 0.45; }
+    .heart-btn, .action-btn { border:0; padding:0; background:transparent; color:var(--text-muted); font:inherit; font-size:13px; cursor:pointer; transition:transform .2s, color .2s; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
+    .heart-btn:hover, .action-btn:hover { transform: scale(1.25); color: var(--text); }
+    .heart-btn.liked { color: var(--danger); }
+    .delete-btn:hover { color: var(--danger) !important; }
+    .edit-btn:hover { color: var(--accent) !important; }
+    .add-pl-btn:hover { color: var(--accent) !important; }
+    .playlist-dropdown { position: fixed; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 6px; display: none; flex-direction: column; gap: 4px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.5); min-width: 140px; }
+    .dropdown-item { display:block; width:100%; border:0; background:transparent; padding:8px 12px; font:inherit; font-size:12px; font-weight:600; color:var(--text); text-align:left; border-radius:6px; cursor:pointer; }
+    .dropdown-item:hover { background: var(--bg-card-hover); color: var(--accent); }
+    .track-meta { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+    .track-meta img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+    .track-row:not(.missing) .track-meta img { cursor: zoom-in; }
+
+    /* SETTINGS VIEW */
+    .settings-view { overflow-y: auto; padding-right: 8px; }
+    .settings-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+    .settings-section h3 { font-size: 13px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+    .settings-label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .settings-label small { display: block; font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+    .settings-value { font-size: 12px; color: var(--text-muted); font-family: Consolas, monospace; }
+
+    /* PLAYER BAR */
+    .player-bar { height: 85px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 18px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; margin: 0 12px 12px 12px; transition: margin-right .2s; }
+    body.queue-open .player-bar { margin-right: min(392px, calc(32vw + 12px)); }
+    .now-playing { display: flex; align-items: center; gap: 14px; width: 260px; }
+    .now-playing img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
+    .center-controls { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 520px; }
+    .btn-row { display: flex; align-items: center; gap: 20px; }
+    .btn-icon { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; transition: color 0.2s, transform 0.2s; }
+    .btn-icon:hover { color: var(--text); }
+    .btn-icon.active-toggle { color: var(--accent) !important; }
+    .btn-main-play { width: 38px; height: 38px; border-radius: 50%; background: var(--text); color: var(--bg-app); font-size: 15px; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
+    .time-slider { display: flex; align-items: center; gap: 12px; width: 100%; font-size: 11px; color: var(--text-muted); font-weight: 700; }
+    .slider-bg { flex: 1; height: 5px; background: var(--border); border-radius: 6px; cursor: pointer; position: relative; display: flex; align-items: center; }
+    .slider-fill { width: 0%; height: 100%; background: var(--accent); border-radius: 6px; position: relative; }
+    .slider-thumb { width: 13px; height: 13px; background: #fff; border-radius: 50%; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) scale(0.8); box-shadow: 0 0 10px var(--accent-glow); opacity: 0; transition: transform 0.15s, opacity 0.15s; pointer-events: none; }
+    .slider-bg:hover .slider-thumb, .slider-bg.dragging .slider-thumb { opacity: 1; transform: translateY(-50%) scale(1.2); }
+    .right-controls { display: flex; align-items: center; gap: 14px; width: 280px; justify-content: flex-end; }
+    .volume-box { display: flex; align-items: center; gap: 10px; width: 100px; }
+    .speed-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+    .speed-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* FULL TRACK VIEW */
+    .track-detail-page { position: fixed; inset: 8px; z-index: 9900; display: none; flex-direction: column; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: radial-gradient(ellipse at 50% 32%, color-mix(in srgb, var(--bg-card-hover) 62%, var(--text-muted) 38%), var(--bg-app) 76%); }
+    .track-detail-page.open { display: flex; animation: detail-page-in .5s cubic-bezier(.16,1,.3,1) both; }
+    .track-detail-page.closing { pointer-events:none; animation:detail-page-out .38s cubic-bezier(.4,0,.2,1) both; }
+    .track-detail-backdrop { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(80px) brightness(.82) saturate(.9); opacity: .78; transform: scale(1.08); }
+    .track-detail-page.open .track-detail-backdrop { animation: detail-backdrop-drift 26s ease-in-out infinite alternate; }
+    .track-detail-main::-webkit-scrollbar { display: none; }
+    .track-detail-scroll-indicator { position: absolute; z-index: 3; top: 70px; right: 6px; bottom: 116px; width: 8px; border-radius: 99px; background: color-mix(in srgb, var(--bg-surface) 58%, transparent); opacity: 0; transform: translateX(7px); pointer-events: none; transition: opacity .36s ease, transform .36s cubic-bezier(.16,1,.3,1); }
+    .track-detail-scroll-indicator.visible { opacity: 1; transform: translateX(0); }
+    .track-detail-scroll-thumb { position: absolute; top: 0; left: 0; right: 0; min-height: 34px; border-radius: inherit; background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent); transition: top .18s cubic-bezier(.16,1,.3,1), height .22s ease; }
+    .track-detail-shade { position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--bg-app) 24%, transparent), transparent 38%, color-mix(in srgb, var(--bg-app) 68%, transparent)); }
+    .track-detail-header, .track-detail-main, .track-detail-footer { position: relative; z-index: 1; }
+    .track-detail-header { min-height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; color: var(--text-muted); }
+    .track-detail-close { display: inline-flex; align-items: center; gap: 10px; border: 0; background: transparent; color: var(--text); font-size: 13px; font-weight: 750; cursor: pointer; }
+    .track-detail-close i { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 50%; display: grid; place-items: center; color: var(--accent); }
+    .track-detail-main { transition: scrollbar-color .32s ease; flex: 1; min-height: 0; width: 100%; max-width: none; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 20px; padding: max(12px, calc((100vh - 58px - 110px - min(512px, 72vw, 58vh)) / 2)) 24px 118px; overflow-y: auto; scroll-behavior: smooth; scrollbar-width: none; scrollbar-color: transparent transparent; }
+    .track-detail-art { justify-self: center; width: min(512px, 72vw, 58vh); height: min(512px, 72vw, 58vh); max-width: 100%; max-height: 58vh; min-width: 0; min-height: 0; flex: 0 0 auto; aspect-ratio:1; object-fit: cover; image-rendering:auto; border-radius: 14px; background: transparent; box-shadow: 0 28px 80px rgba(0,0,0,.48); animation: detail-art-in .7s cubic-bezier(.2,.75,.25,1) both; transition: transform .45s ease, box-shadow .45s ease; }
+    .track-detail-page.is-playing .track-detail-art { animation: detail-art-in .7s cubic-bezier(.2,.75,.25,1) both, detail-art-breathe 5s 0.7s ease-in-out infinite; }
+    .track-detail-info { width: min(920px, 88vw); margin-top: clamp(180px, 26vh, 320px); padding: 8px 4px 12px; border-radius: 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: transparent; border: 0; backdrop-filter: none; color: var(--text); animation: detail-content-in .55s .12s both; }
+    .track-detail-info, .track-detail-panels { flex:0 0 auto; }
+    .track-detail-info-main { min-width: 0; }
+    .track-detail-kicker { font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .track-detail-title { font-size: clamp(20px, 3vw, 30px); font-weight: 850; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .track-detail-artist { font-size: 14px; color: var(--text-muted); margin-top: 5px; }
+    .track-detail-album { font-size: 12px; color: var(--text-muted); text-align: right; }
+    .track-detail-actions { display:flex; gap:8px; margin-top:14px; }
+    .track-detail-action { display:inline-flex; align-items:center; gap:8px; padding:9px 13px; color:var(--text); background:var(--bg-card); border:1px solid var(--border); border-radius:999px; font-size:12px; font-weight:750; cursor:pointer; transition:transform .2s, background .2s, border-color .2s; }
+    .track-detail-action:hover { transform:translateY(-2px); background:var(--bg-card-hover); border-color:var(--accent); color:var(--accent); }
+    .track-detail-action:active { transform:scale(.96); }
+    .track-detail-action.liked { color:var(--danger); border-color:var(--danger); }
+    .track-detail-panels { width:min(920px,88vw); display:grid; grid-template-columns:1fr 1fr; gap:14px; animation:detail-content-in .55s .22s both; }
+    .track-detail-card { min-width:0; padding:22px 24px; border-radius:16px; background:color-mix(in srgb, var(--bg-surface) 88%, transparent); border:1px solid var(--border); backdrop-filter:blur(14px); color:var(--text); }
+    .track-detail-card h2 { margin:0 0 13px; font-size:17px; letter-spacing:-.3px; }
+    .track-detail-card p { margin:0; color:var(--text-muted); font-size:13px; line-height:1.55; }
+    .track-detail-facts { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .track-detail-fact span { display:block; color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:.8px; margin-bottom:4px; }
+    .track-detail-fact strong { display:block; color:var(--text); font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    @keyframes detail-page-in { from { opacity:0; transform:scale(.985); } to { opacity:1; transform:scale(1); } }
+    @keyframes detail-page-out { to { opacity:0; transform:translateY(10px) scale(.985); transform-origin:50% 50%; border-radius:14px; } }
+    @keyframes detail-art-in { from { opacity:0; transform:translateY(18px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes detail-content-in { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes detail-backdrop-drift { from { transform:scale(1.08) translate3d(-1%,0,0); } to { transform:scale(1.18) translate3d(1%, -1%,0); } }
+    @keyframes detail-art-breathe { 0%,100% { transform:scale(1); } 50% { transform:scale(1.012); } }
+    .track-detail-footer { min-height: 12px; }
+    @media (max-width:700px) { .track-detail-header { padding:10px 14px; } .track-detail-main { gap:14px; padding:max(12px,calc((100vh - 58px - 120px - min(512px,86vw,58vh))/2)) 12px 130px; } .track-detail-art { width:min(512px,86vw,58vh); height:min(512px,86vw,58vh); max-height:58vh; } .track-detail-info { width:100%; margin-top:clamp(150px,24vh,220px); padding:15px 4px; } .track-detail-album { display:none; } .track-detail-panels { width:100%; grid-template-columns:1fr; } .track-detail-card { padding:15px; } }
+    @media (prefers-reduced-motion: reduce) { .track-detail-page.open, .track-detail-page.closing, .track-detail-page.open .track-detail-backdrop, .track-detail-art, .track-detail-page.is-playing .track-detail-art, .track-detail-info, .track-detail-panels { animation:none !important; transition:none !important; } }
+    body.track-detail-open .player-bar { position: fixed; z-index: 9902; left: 20px; right: 20px; bottom: 16px; margin: 0; width: auto; background: color-mix(in srgb, var(--bg-surface) 88%, transparent); border-color: var(--border); backdrop-filter: blur(18px); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
+    body.track-detail-open.queue-open .player-bar { right: min(392px, calc(32vw + 12px)); }
+    body.track-detail-open .queue-panel { z-index: 9904; }
+
+    /* LYRICS */
+    .lyrics-sidebar { width: 320px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: none; flex-direction: column; gap: 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .lyrics-header { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .lyrics-scroll-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 6px; scroll-behavior: smooth; }
+    .lyrics-scroll-container::-webkit-scrollbar { width: 4px; }
+    .lyrics-scroll-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .lyric-line { font-size: 15px; font-weight: 700; color: var(--text-muted); opacity: 0.4; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; line-height: 1.4; }
+    .lyric-line:hover { opacity: 0.8; }
+    .lyric-line.active { color: var(--accent); opacity: 1; font-size: 18px; transform: scale(1.03); text-shadow: 0 0 12px var(--accent-glow); }
+
+    /* QUEUE PANEL */
+    .queue-panel { position: fixed; top: 0; right: 0; width: min(380px, 32vw); min-width: 310px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border); padding: 20px; display: none; flex-direction: column; gap: 14px; z-index: 999; box-shadow: -20px 0 40px rgba(0,0,0,0.5); }
+    .queue-panel.open { display: flex; }
+    .queue-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .queue-header h3 { font-size: 14px; font-weight: 800; }
+    .queue-header-actions { display: flex; gap: 8px; align-items: center; }
+    .queue-clear-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .queue-clear-btn:hover { color: var(--danger); border-color: var(--danger); }
+    .queue-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+    .queue-list::-webkit-scrollbar { width: 4px; }
+    .queue-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .queue-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+    .queue-item.downloading { border-color: var(--accent); }
+    .queue-item.done { border-color: #10b981; opacity: 0.7; }
+    .queue-item.error { border-color: var(--danger); }
+    .queue-item-title { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 24px; }
+    .queue-item-url { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .queue-progress-track { width: 100%; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .queue-progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; border-radius: 4px; }
+    .queue-item-status { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .queue-item-status.downloading { color: var(--accent); }
+    .queue-item-status.done { color: #10b981; }
+    .queue-item-status.error { color: var(--danger); }
+    .queue-error-details { border-top: 1px solid var(--border); padding-top: 7px; color: var(--danger); font-size: 10px; }
+    .queue-error-details summary { cursor: pointer; font-weight: 700; }
+    .queue-error-details pre { max-height: 96px; overflow: auto; margin: 6px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text-muted); font: inherit; line-height: 1.45; }
+    .queue-transfer-info { min-height: 12px; font-size: 10px; color: var(--text-muted); }
+    .queue-retry-btn { align-self: flex-start; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); color: var(--text); background: var(--bg-surface); cursor: pointer; }
+    .queue-item-remove { border:0; padding:0; background:transparent; position: absolute; top: 8px; right: 8px; color: var(--text-muted); font-size: 12px; cursor: pointer; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    .queue-item-remove:hover { color: var(--danger); }
+
+    /* MODALS */
+    .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 999; }
+    .modal-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 380px; display: flex; flex-direction: column; gap: 16px; }
+    .modal-input { padding: 10px 14px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; outline: none; font-size: 13px; width: 100%; }
+    #video-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+    #video-modal-inner { position: relative; width: 90%; max-width: 1200px; aspect-ratio: 16/9; }
+    #video-player { width: 100%; height: 100%; background: black; border-radius: 12px; display: block; }
+    #close-video { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 18px; cursor: pointer; z-index: 10; }
+    #video-tools { position: absolute; top: 12px; left: 12px; display: flex; gap: 8px; z-index: 10; }
+    #video-tools button { padding: 9px 12px; border-radius: 8px; border: 1px solid #ffffff44; background: #000b; color: white; cursor: pointer; }
+
+    /* TOAST */
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .toast { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); color: var(--text); padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); opacity: 1; transform: translateX(0); transition: all 0.3s; pointer-events: auto; min-width: 220px; }
+    .toast-success { border-left-color: #10b981; } .toast-success i { color: #10b981; }
+    .toast-error { border-left-color: #ef4444; } .toast-error i { color: #ef4444; }
+    .toast-warning { border-left-color: #f59e0b; } .toast-warning i { color: #f59e0b; }
+    .toast-info i { color: var(--accent); }
+
+    /* CONFIRM */
+    #confirm-modal { z-index: 10001; }
+    #confirm-modal .modal-card { width: 360px; }
+    .btn-danger { padding: 9px 18px; background: var(--danger); color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .btn-secondary { padding: 9px 18px; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; }
+
+    /* DROP OVERLAY */
+    #drop-overlay { position: fixed; inset: 0; background: rgba(59, 130, 246, 0.15); border: 3px dashed var(--accent); z-index: 9998; display: none; align-items: center; justify-content: center; pointer-events: none; }
+    #drop-overlay div { background: var(--bg-card); padding: 30px 50px; border-radius: 20px; font-size: 18px; font-weight: 800; color: var(--accent); box-shadow: 0 20px 60px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 14px; }
+    .btn-add-playlist:focus-visible, .panel-close-btn:focus-visible, .volume-mute-btn:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+    .panel-close-btn, .volume-mute-btn { display:grid; place-items:center; border:0; padding:4px; background:transparent; color:var(--text-muted); cursor:pointer; }
+    .volume-mute-btn { font-size:13px; }
+    .track-meta[role="button"] { cursor:pointer; border-radius:8px; }
+    .slider-bg[role="slider"]:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+    @media (max-width: 900px) { .app-container { gap:7px; } .content-area { padding:12px; } .table-head, .track-row { column-gap:4px; padding-left:6px; padding-right:6px; } .now-playing { min-width:0; } }
+    @media (max-width: 1180px) {
+      body.queue-open .app-container { padding-right: 8px; }
+      body.queue-open .player-bar { margin-right: 8px; }
+      .queue-panel { top: 12px; right: 12px; width: min(420px, calc(100vw - 24px)); min-width: 0; height: calc(100vh - 24px); border: 1px solid var(--border); border-radius: 16px; }
+      .sidebar { width: 205px; }
+      .content-area { padding: 16px; }
+      .table-head, .track-row { grid-template-columns: 28px 28px minmax(180px, 2.5fr) minmax(90px, 1.3fr) 70px 30px 30px 30px; padding-left: 10px; padding-right: 10px; }
+      .now-playing { width: 210px; gap: 9px; }
+      .right-controls { width: 220px; gap: 9px; }
+    }
+    @media (max-width: 900px) {
+      .app-container { gap: 8px; padding: 8px; }
+      .sidebar { width: 175px; padding: 16px 10px; }
+      .content-area { padding: 14px; }
+      .featured-card { padding: 16px; }
+      .featured-title { font-size: 18px; }
+      .player-bar { padding: 0 14px; margin: 0 8px 8px; }
+      .settings-row { align-items: flex-start; }
+      .settings-actions { max-width: 60%; }
+      body.track-detail-open.queue-open .player-bar { right: 20px; }
+      .now-playing { width: 175px; }
+      .right-controls { width: 180px; }
+      .volume-box { width: 70px; }
+      .btn-row { gap: 13px; }
+    }
+    @media (max-height: 760px) {
+      .featured-card { padding: 14px 18px; }
+      .featured-img { width: 76px; height: 76px; }
+      .player-bar { height: 74px; }
+    }
+    /* Keep every library column inside its grid cell and give names room to truncate. */
+    .table-head, .track-row {
+      grid-template-columns: 30px 30px minmax(0, 2fr) minmax(0, 1fr) 54px 30px 30px 30px;
+      column-gap: 8px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .table-head > *, .track-row > * { min-width: 0; }
+    .track-meta { min-width: 0; gap: 10px; }
+    .track-meta > div { flex: 1; min-width: 0; }
+    .track-meta > div > div:first-child { max-width: 100% !important; }
+    .track-meta > div > div:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .track-row > div:nth-child(4) { min-width: 0; }
+    .lyric-line { opacity: 0.72; overflow-wrap: anywhere; }
+    .lyric-line:hover { opacity: 0.92; }
+    .lyric-line.active { opacity: 1; }
+    button:focus-visible, [role="button"]:focus-visible, .track-row:focus-visible, .btn-icon:focus-visible, .btn-play-hero:focus-visible,
+    .action-btn:focus-visible, .heart-btn:focus-visible, .nav-item:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    @media (max-width: 1180px) {
+      .lyrics-sidebar {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        bottom: 104px;
+        height: auto;
+        width: min(320px, calc(100vw - 24px));
+        z-index: 900;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+      }
+      .table-head, .track-row {
+        grid-template-columns: 26px 26px minmax(0, 1.8fr) minmax(0, 0.9fr) 48px 28px 28px 28px;
+        column-gap: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .track-meta { gap: 7px; }
+      .track-meta img { width: 32px; height: 32px; }
+      .playlist-detail { margin: -14px; padding: 26px 18px 18px; }
+      .playlist-hero { gap: 18px; }
+      .playlist-cover { width: 160px; height: 160px; }
+    }
+    @media (max-width: 720px) {
+      .playlist-hero { align-items: flex-start; flex-direction: column; min-height: 0; }
+      .playlist-cover { width: min(220px, 62vw); height: min(220px, 62vw); }
+      .playlist-title { font-size: 32px; }
+      .spotify-embed-wrap iframe { height: 430px; }
+    }
+    /* Subtle, consistent motion across the player */
+    @keyframes app-content-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes queue-enter { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes modal-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modal-card-in { from { opacity: 0; transform: translateY(12px) scale(.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toast-enter { from { opacity: 0; transform: translateX(18px) scale(.98); } to { opacity: 1; transform: translateX(0) scale(1); } }
+    .content-area { animation: app-content-in .42s cubic-bezier(.2,.75,.25,1) both; }
+    .nav-item { transition: color .2s ease, background .2s ease, transform .2s cubic-bezier(.2,.75,.25,1); }
+    .nav-item:hover { transform: translateX(3px); }
+    .track-row { transition: background .2s ease, border-color .2s ease, transform .2s cubic-bezier(.2,.75,.25,1), box-shadow .2s ease; }
+    .track-row:hover { transform: translateY(-1px); box-shadow: 0 7px 20px rgba(0,0,0,.16); }
+    .btn-main-play { transition: transform .18s cubic-bezier(.2,.75,.25,1), box-shadow .2s ease, background .2s ease; }
+    .btn-main-play:hover { transform: scale(1.08); box-shadow: 0 0 0 6px var(--accent-glow); }
+    .btn-main-play:active, .btn-play-hero:active, .playlist-action-play:active { transform: scale(.94); }
+    .playlist-detail { animation: app-content-in .42s cubic-bezier(.2,.75,.25,1) both; }
+    .queue-panel.open { animation: queue-enter .28s cubic-bezier(.16,1,.3,1) both; }
+    .modal[style*="display: flex"] { animation: modal-backdrop-in .18s ease both; }
+    .modal[style*="display: flex"] .modal-card { animation: modal-card-in .26s cubic-bezier(.16,1,.3,1) both; }
+    .toast { animation: toast-enter .24s cubic-bezier(.16,1,.3,1) both; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    /* Theme-aware scrollbars: quiet while idle, visible briefly during scrolling */
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list) {
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
+    }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list)::-webkit-scrollbar { width: 9px; height: 9px; }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list)::-webkit-scrollbar-track { background: transparent; }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list)::-webkit-scrollbar-thumb {
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      background-clip: padding-box;
+      transition: background-color .28s ease, border-width .28s ease;
+    }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list).is-scrolling {
+      scrollbar-color: var(--accent) transparent;
+    }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list).is-scrolling::-webkit-scrollbar-thumb {
+      background-color: var(--accent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 22%, transparent), 0 0 10px var(--accent-glow);
+    }
+    :is(.sidebar, .playlist-detail, .table-container, .settings-view, .lyrics-scroll-container, .queue-list)::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-icon">
+            <img src="logo.png" alt="OutFix" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-bolt\'></i>';">
+          </div>
+          <span>OutFix Player</span>
+        </div>
+
+        <div class="nav-group">
+          <div class="group-title">Navigation</div>
+          <button type="button" id="nav-all" class="nav-item active"><i class="fa-solid fa-house" aria-hidden="true"></i> All Tracks</button>
+          <button type="button" id="nav-fav" class="nav-item"><i class="fa-solid fa-heart" aria-hidden="true"></i> Favorites</button>
+          <button type="button" id="nav-queue" class="nav-item"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Download Queue <span id="queue-count" style="margin-left:auto; font-size:10px; background:var(--accent); color:#fff; padding:2px 6px; border-radius:10px; display:none;">0</span></button>
+        </div>
+
+        <div class="nav-group">
+          <div class="group-title">
+            <span>My Playlists</span>
+            <span style="display:flex;align-items:center;gap:12px;"><button type="button" id="btn-create-playlist" class="btn-add-playlist" title="Create Playlist" aria-label="Create playlist"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></span>
+          </div>
+          <div id="playlist-list-container"></div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="nav-settings" class="nav-item" style="margin-bottom:8px;"><i class="fa-solid fa-cog" aria-hidden="true"></i> Settings</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="view-library" class="view active">
+        <div class="top-header">
+          <div class="input-box">
+            <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted); font-size:13px;"></i>
+            <input type="text" id="url-input" placeholder="Paste YouTube URL(s) — comma or newline separated...">
+          </div>
+          <select id="format-select" class="theme-select" style="width:120px; flex-shrink:0;">
+            <option value="mp3">MP3</option>
+            <option value="m4a">M4A</option>
+            <option value="flac">FLAC</option>
+            <option value="mp4">MP4</option>
+            <option value="webm">WEBM</option>
+          </select>
+          <select id="quality-select" class="theme-select" style="width:110px; flex-shrink:0;">
+            <option value="128">128 kbps</option>
+            <option value="192" selected>192 kbps</option>
+            <option value="320">320 kbps</option>
+            <option value="720">720p</option>
+            <option value="1080">1080p</option>
+          </select>
+          <button id="fetch-btn" class="btn-download"><i class="fa-solid fa-plus"></i> Add to Queue</button>
+        </div>
+
+        <div id="playlist-detail" class="playlist-detail" aria-live="polite"></div>
+
+        <div class="toolbar-row">
+          <div class="search-box">
+            <i class="fa-solid fa-search" style="color:var(--text-muted); font-size:12px;"></i>
+            <input type="text" id="search-input" placeholder="Search library (Ctrl+F)...">
+          </div>
+          <select id="sort-select" class="theme-select" style="width:180px; flex-shrink:0;">
+            <option value="default">Sort: Default</option>
+            <option value="title-asc">Title (A-Z)</option>
+            <option value="title-desc">Title (Z-A)</option>
+            <option value="artist-asc">Artist (A-Z)</option>
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="duration-asc">Shortest first</option>
+            <option value="duration-desc">Longest first</option>
+            <option value="size-desc">Largest first</option>
+          </select>
+          <select id="media-filter" class="theme-select" style="width:118px; flex-shrink:0;">
+            <option value="all">All media</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+
+        <div class="featured-card">
+          <div>
+            <div style="font-size:10px; font-weight:800; color:var(--accent); text-transform:uppercase;">Featured Track</div>
+            <div id="feat-title" class="featured-title">No track yet</div>
+            <div id="feat-subtitle" class="featured-subtitle">Paste a link to get started</div>
+            <button id="hero-play-btn" class="btn-play-hero"><i class="fa-solid fa-play"></i> Play Song</button>
+          </div>
+          <img id="feat-img" class="featured-img" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300" alt="">
+        </div>
+
+        <div class="table-container">
+          <!-- âœ… UPDATED: added "Add" column before Edit -->
+          <div class="table-head">
+            <div>#</div>
+            <div>Like</div>
+            <div>Title</div>
+            <div>Album</div>
+            <div>Format</div>
+            <div style="text-align: center;">Add</div>
+            <div style="text-align: center;">Edit</div>
+            <div style="text-align: center;">Delete</div>
+          </div>
+          <div id="track-rows" class="track-list"></div>
+        </div>
+      </div>
+
+      <div id="view-settings" class="view settings-view">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:var(--accent-btn); display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; box-shadow:0 0 20px var(--accent-glow);">
+            <i class="fa-solid fa-cog"></i>
+          </div>
+          <div>
+            <div style="font-size:22px; font-weight:800;">Settings</div>
+            <div style="font-size:12px; color:var(--text-muted);">Configure OutFix Player</div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3><i class="fa-solid fa-folder"></i> Storage</h3>
+          <div class="settings-row">
+            <div class="settings-label">Save Folder<small id="save-folder-path">—</small><small>Save to… applies to the next batch; Change updates the default.</small></div>
+            <div class="settings-actions">
+              <button id="download-folder-btn" class="theme-select" style="width:auto; padding:8px 12px; cursor:pointer;" title="Choose folder for this download batch">
+                <i class="fa-solid fa-folder"></i> Save to…
+              </button>
+              <button id="pick-folder-btn" class="theme-select" style="width:auto; padding:8px 14px; cursor:pointer;">
+                <i class="fa-solid fa-folder-open"></i> Change
+              </button>
+              <button id="open-folder-btn" class="theme-select" style="width:auto; padding:8px 14px; cursor:pointer; margin-left:6px;">
+                <i class="fa-solid fa-external-link-alt"></i> Open
+              </button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-label">Library Backup<small>Automatic backup plus manual import/export</small></div>
+            <div style="display:flex; gap:6px;">
+              <button id="export-library-btn" class="theme-select" style="width:auto; padding:8px 12px; cursor:pointer;"><i class="fa-solid fa-file-export"></i> Export</button>
+              <button id="import-library-btn" class="theme-select" style="width:auto; padding:8px 12px; cursor:pointer;"><i class="fa-solid fa-file-import"></i> Restore</button>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-label">Import music<small>Add audio or video files from your computer</small></div>
+            <div class="settings-actions">
+              <button id="import-files-btn" class="theme-select" style="width:auto; padding:8px 12px; cursor:pointer;"><i class="fa-solid fa-file-audio"></i> Import Files</button>
+              <button id="import-folder-btn" class="theme-select" style="width:auto; padding:8px 12px; cursor:pointer;"><i class="fa-solid fa-folder-plus"></i> Import Folder</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+          <div class="settings-row">
+            <div class="settings-label">Theme<small>Choose from 22 built-in themes</small></div>
+            <select id="theme-selector" class="theme-select" style="width:200px;">
+              <option value="charcoal">Charcoal Slate</option>
+              <option value="amoled">AMOLED Black</option>
+              <option value="midnight">Midnight Purple</option>
+              <option value="dracula">Dracula</option>
+              <option value="nord">Nord</option>
+              <option value="monokai">Monokai</option>
+              <option value="gruvbox">Gruvbox</option>
+              <option value="tokyo">Tokyo Night</option>
+              <option value="catppuccin">Catppuccin</option>
+              <option value="rose">Rosé Pine</option>
+              <option value="nordic">Nordic Light</option>
+              <option value="cyber">Cyberpunk Neon</option>
+              <option value="sunset">Sunset Crimson</option>
+              <option value="emerald">Emerald Mint</option>
+              <option value="ocean">Ocean Deep Blue</option>
+              <option value="pastel">Pastel Violet</option>
+              <option value="latte">Warm Latte</option>
+              <option value="amber">Retro Amber</option>
+              <option value="silver">Monochrome Silver</option>
+              <option value="gold">Midnight Gold</option>
+              <option value="spotify">Spotify Green</option>
+              <option value="aurora">Aurora Violet</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3><i class="fa-solid fa-gauge-high"></i> Playback</h3>
+          <div class="settings-row">
+            <div class="settings-label">Crossfade<small>Fade between tracks</small></div>
+            <select id="crossfade-select" class="theme-select" style="width:140px;">
+              <option value="0">Off</option>
+              <option value="1">1 second</option>
+              <option value="2" selected>2 seconds</option>
+              <option value="3">3 seconds</option>
+              <option value="5">5 seconds</option>
+            </select>
+          </div>
+          <div class="settings-row">
+            <div class="settings-label">Default Speed<small>Playback speed</small></div>
+            <select id="speed-select" class="theme-select" style="width:140px;">
+              <option value="0.5">0.5x</option>
+              <option value="0.75">0.75x</option>
+              <option value="1" selected>1.0x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2.0x</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3><i class="fa-solid fa-keyboard"></i> Keyboard Shortcuts</h3>
+          <div class="settings-row"><div class="settings-label">Play / Pause</div><div class="settings-value">Space</div></div>
+          <div class="settings-row"><div class="settings-label">Next / Prev</div><div class="settings-value">← / →</div></div>
+          <div class="settings-row"><div class="settings-label">Volume</div><div class="settings-value">↑ / ↓</div></div>
+          <div class="settings-row"><div class="settings-label">Search</div><div class="settings-value">Ctrl + F</div></div>
+          <div class="settings-row"><div class="settings-label">Lyrics</div><div class="settings-value">Ctrl + L</div></div>
+          <div class="settings-row"><div class="settings-label">New Playlist</div><div class="settings-value">Ctrl + N</div></div>
+          <div class="settings-row"><div class="settings-label">Mute</div><div class="settings-value">Ctrl + M</div></div>
+          <div class="settings-row"><div class="settings-label">Settings</div><div class="settings-value">Ctrl + S</div></div>
+          <div class="settings-row"><div class="settings-label">Speed Up / Down</div><div class="settings-value">Ctrl + ↑ / ↓</div></div>
+          <div class="settings-row"><div class="settings-label">Toggle Queue</div><div class="settings-value">Ctrl + Q</div></div>
+          <div class="settings-row"><div class="settings-label">Close</div><div class="settings-value">Esc</div></div>
+        </div>
+
+        <div class="settings-section">
+          <h3><i class="fa-solid fa-info-circle"></i> About</h3>
+          <div class="settings-row"><div class="settings-label">App Name</div><div class="settings-value">OutFix Player</div></div>
+          <div class="settings-row"><div class="settings-label">Version</div><div class="settings-value">1.0.1</div></div>
+          <div class="settings-row"><div class="settings-label">Author</div><div class="settings-value">vexix-07</div></div>
+          <div class="settings-row"><div class="settings-label">Engine</div><div class="settings-value">Electron + yt-dlp + ffmpeg</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lyrics-sidebar" class="lyrics-sidebar">
+      <div class="lyrics-header">
+        <span><i class="fa-solid fa-align-left" style="color:var(--accent); margin-right:8px;"></i> Lyrics</span>
+        <button type="button" id="close-lyrics-panel" class="panel-close-btn" aria-label="Close lyrics"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <div id="lyrics-scroll-container" class="lyrics-scroll-container">
+        <div style="color:var(--text-muted); font-size:13px; text-align:center; margin-top:40px;">Select a track to view live lyrics...</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="track-detail-page" class="track-detail-page" aria-hidden="true">
+    <img id="track-detail-backdrop" class="track-detail-backdrop" alt="">
+    <div class="track-detail-shade"></div>
+    <header class="track-detail-header">
+      <button id="close-track-detail" class="track-detail-close"><i class="fa-solid fa-chevron-down"></i><span>Now Playing</span></button>
+      <span style="color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;">OutFix Player</span>
+    </header>
+    <main class="track-detail-main">
+      <img id="track-detail-cover" class="track-detail-art" alt="Album artwork">
+      <section class="track-detail-info">
+        <div class="track-detail-info-main">
+          <div class="track-detail-kicker">Now playing</div>
+          <h1 id="track-detail-title" class="track-detail-title">No track</h1>
+          <div id="track-detail-artist" class="track-detail-artist">—</div>
+          <div class="track-detail-actions">
+            <button id="track-detail-like" class="track-detail-action" type="button"><i class="fa-regular fa-heart"></i><span>Save to Favorites</span></button>
+            <button id="track-detail-lyrics" class="track-detail-action" type="button"><i class="fa-solid fa-align-left"></i><span>Open lyrics</span></button>
+          </div>
+        </div>
+        <div id="track-detail-album" class="track-detail-album"></div>
+      </section>
+      <section class="track-detail-panels" aria-label="Track information">
+        <article class="track-detail-card"><h2>About the artist</h2><p id="track-detail-about">Artist information for this track from your OutFix library.</p></article>
+        <article class="track-detail-card"><h2>Track details</h2><div class="track-detail-facts">
+          <div class="track-detail-fact"><span>Artist</span><strong id="track-detail-fact-artist">—</strong></div>
+          <div class="track-detail-fact"><span>Album</span><strong id="track-detail-fact-album">—</strong></div>
+          <div class="track-detail-fact"><span>Format</span><strong id="track-detail-fact-format">—</strong></div>
+          <div class="track-detail-fact"><span>Length</span><strong id="track-detail-fact-length">—</strong></div>
+        </div></article>
+      </section>
+    </main>
+    <div id="track-detail-scroll-indicator" class="track-detail-scroll-indicator" aria-hidden="true"><div class="track-detail-scroll-thumb"></div></div>
+    <div class="track-detail-footer"></div>
+  </div>
+
+  <div class="player-bar">
+    <div class="now-playing">
+      <img id="np-cover" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100" alt="">
+      <div>
+        <div id="np-title" style="font-size:13px; font-weight:700;">No track</div>
+        <div id="np-artist" style="font-size:11px; color:var(--text-muted);">—</div>
+      </div>
+      <button type="button" id="main-heart-btn" class="heart-btn" style="margin-left:10px;" aria-label="Add to favorites" title="Add to favorites"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="center-controls">
+      <div class="btn-row">
+        <button type="button" id="shuffle-btn" class="btn-icon" aria-label="Shuffle" title="Shuffle" aria-pressed="false"><i class="fa-solid fa-shuffle"></i></button>
+        <button type="button" id="prev-btn" class="btn-icon" aria-label="Previous track" title="Previous track"><i class="fa-solid fa-backward-step"></i></button>
+        <button type="button" id="play-btn" class="btn-icon btn-main-play" aria-label="Play" title="Play"><i class="fa-solid fa-play"></i></button>
+        <button type="button" id="next-btn" class="btn-icon" aria-label="Next track" title="Next track"><i class="fa-solid fa-forward-step"></i></button>
+        <button type="button" id="repeat-btn" class="btn-icon" aria-label="Repeat current track" title="Repeat current track" aria-pressed="false"><i class="fa-solid fa-repeat"></i></button>
+      </div>
+      <div class="time-slider">
+        <span id="curr-time">0:00</span>
+        <div id="slider-bg" class="slider-bg" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="slider-fill" class="slider-fill">
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+        <span id="dur-time">0:00</span>
+      </div>
+    </div>
+
+    <div class="right-controls">
+      <button id="speed-btn" class="speed-btn" title="Playback speed">1.0x</button>
+      <button id="open-track-detail-btn" class="btn-icon" title="Open Now Playing details" aria-label="Open Now Playing details"><i class="fa-solid fa-expand"></i></button>
+      <button type="button" id="lyrics-btn" class="btn-icon" title="Toggle Live Lyrics" aria-label="Toggle lyrics" aria-pressed="false"><i class="fa-solid fa-align-left"></i></button>
+      <div class="volume-box">
+        <button type="button" id="volume-icon" class="volume-mute-btn" aria-label="Mute" title="Mute"><i class="fa-solid fa-volume-high" aria-hidden="true"></i></button>
+        <div id="volume-bg" class="slider-bg" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">
+          <div id="volume-fill" class="slider-fill" style="width: 80%;">
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUEUE PANEL -->
+  <div id="queue-panel" class="queue-panel">
+    <div class="queue-header">
+      <h3><i class="fa-solid fa-list-check" style="color:var(--accent); margin-right:8px;"></i> Download Queue</h3>
+      <div class="queue-header-actions">
+        <button id="queue-clear-done" class="queue-clear-btn">Clear Done</button>
+        <button type="button" id="close-queue-panel" class="panel-close-btn" aria-label="Close download queue"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <div id="queue-list" class="queue-list">
+      <div style="color:var(--text-muted); font-size:12px; text-align:center; margin-top:40px;">Queue is empty. Add URLs above.</div>
+    </div>
+  </div>
+
+  <div id="spotify-import-modal" class="modal">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;">
+        <h3 style="font-size:15px;font-weight:800;"><i class="fa-brands fa-spotify" style="color:#1ed760;margin-right:8px;"></i>Import Spotify playlist</h3>
+        <i id="close-spotify-import" class="fa-solid fa-xmark" style="cursor:pointer;color:var(--text-muted);"></i>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);line-height:1.5;">Paste a Spotify playlist link. It will open in the official Spotify player inside OutFix.</p>
+      <input type="text" id="spotify-playlist-name" class="modal-input" placeholder="Playlist name (optional)">
+      <input type="url" id="spotify-playlist-url" class="modal-input" placeholder="https://open.spotify.com/playlist/...">
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+        <button id="save-spotify-playlist" class="btn-download" style="padding:9px 18px;"><i class="fa-brands fa-spotify"></i> Add playlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Playlist modal -->
+  <div id="playlist-modal" class="modal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 id="playlist-modal-title" style="font-size:15px; font-weight:800;">Create New Playlist</h3>
+        <i id="close-playlist-modal" class="fa-solid fa-xmark" style="cursor:pointer; color:var(--text-muted);"></i>
+      </div>
+      <input type="text" id="playlist-name-input" class="modal-input" placeholder="Playlist Name...">
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:8px;">
+        <button id="save-playlist-btn" style="padding:9px 18px; background:var(--accent-btn); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:12px; cursor:pointer;">Create Playlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit metadata modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:15px; font-weight:800;">Edit Metadata</h3>
+        <i id="close-edit-modal" class="fa-solid fa-xmark" style="cursor:pointer; color:var(--text-muted);"></i>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <img id="edit-cover-preview" src="" style="width:64px; height:64px; border-radius:8px; object-fit:cover; background:var(--bg-card);">
+        <div style="flex:1;">
+          <label style="font-size:11px; color:var(--text-muted); font-weight:700;">TITLE</label>
+          <input type="text" id="edit-title" class="modal-input" style="margin-top:4px;">
+        </div>
+      </div>
+      <div>
+        <label style="font-size:11px; color:var(--text-muted); font-weight:700;">ARTIST</label>
+        <input type="text" id="edit-artist" class="modal-input" style="margin-top:4px;">
+      </div>
+      <div>
+        <label style="font-size:11px; color:var(--text-muted); font-weight:700;">ALBUM</label>
+        <input type="text" id="edit-album" class="modal-input" style="margin-top:4px;">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:8px;">
+        <button id="cancel-edit-btn" class="btn-secondary">Cancel</button>
+        <button id="save-edit-btn" style="padding:9px 18px; background:var(--accent-btn); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:12px; cursor:pointer;">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm modal -->
+  <div id="confirm-modal" class="modal">
+    <div class="modal-card">
+      <h3>Are you sure?</h3>
+      <p id="confirm-message">This action cannot be undone.</p>
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button id="confirm-cancel" class="btn-secondary">Cancel</button>
+        <button id="confirm-ok" class="btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video modal -->
+  <div id="video-modal">
+    <div id="video-modal-inner">
+      <div id="video-tools">
+        <button id="subtitle-btn" type="button"><i class="fa-solid fa-closed-captioning"></i> Subtitles</button>
+        <button id="fullscreen-btn" type="button"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+        <input id="subtitle-file-input" type="file" accept=".vtt,.srt,text/vtt,application/x-subrip" hidden>
+      </div>
+      <video id="video-player" controls></video>
+      <button id="close-video" aria-label="Close video">×</button>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <div id="drop-overlay"><div><i class="fa-solid fa-file-arrow-down"></i> Drop files to add</div></div>
+
+  <div id="track-context-menu" class="playlist-dropdown">
+    <button type="button" class="dropdown-item" data-action="play">Play</button>
+    <button type="button" class="dropdown-item" data-action="locate">Locate / Repair File</button>
+    <button type="button" class="dropdown-item" data-action="like">Like / Unlike</button>
+    <button type="button" class="dropdown-item" data-action="add">Add to Playlist</button>
+    <button type="button" class="dropdown-item" data-action="edit">Edit Metadata</button>
+    <button type="button" class="dropdown-item" data-action="delete" style="color:var(--danger);">Remove from Library</button>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
