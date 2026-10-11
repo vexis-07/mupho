@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="OutFix Player brings your music, videos, playlists and downloads together in one focused desktop app.">
+  <title>OutFix Player — Your sound, your space</title>
+  <link rel="icon" href="../logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#080b14;--panel:#0d1321;--panel2:#111a2b;--line:rgba(157,181,220,.13);--text:#f5f7fb;--muted:#8c9bb2;--blue:#5793ff;--cyan:#73e3e2;--green:#31d685;--font:'DM Sans',sans-serif;--display:'Space Grotesk',sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.55;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 70% 15%,rgba(44,105,196,.2),transparent 42%),radial-gradient(ellipse at 0 65%,rgba(46,178,170,.09),transparent 32%)}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1160px,calc(100% - 48px));margin:auto}
+    .nav{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:11px;font:700 18px var(--display);letter-spacing:-.5px}.brand img{width:34px;height:34px;border-radius:10px;box-shadow:0 0 25px rgba(87,147,255,.24)}
+    .navlinks{display:flex;align-items:center;gap:32px;color:#a8b4c7;font-size:13px;font-weight:600}.navlinks a:hover,.text-link:hover{color:white}
+    .nav-cta,.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:12px 17px;font-weight:700;font-size:13px;transition:transform .2s,border-color .2s,background .2s}
+    .nav-cta{padding:10px 14px;color:white;background:rgba(87,147,255,.12);border-color:rgba(87,147,255,.3)}.nav-cta:hover,.button:hover{transform:translateY(-2px)}
+    .hero{display:grid;grid-template-columns:1fr .95fr;gap:56px;align-items:center;min-height:640px;padding:82px 0 94px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a7c4ff;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+    .live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+    h1,h2,h3,p{margin-top:0}h1{font:600 clamp(48px,6vw,76px)/1.03 var(--display);letter-spacing:-4px;margin:22px 0 22px;max-width:600px}h1 em{font-style:normal;background:linear-gradient(100deg,#72a8ff,#76e6d8);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-copy{font-size:16px;color:#9caac0;max-width:480px;line-height:1.8}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 20px}
+    .button.primary{color:#07101e;background:linear-gradient(110deg,#82b0ff,#67deda);border:0;box-shadow:0 12px 38px rgba(71,148,255,.22)}
+    .button.secondary{background:rgba(255,255,255,.035);color:#d8e0ed}.button.secondary:hover{border-color:rgba(255,255,255,.33)}
+    .button svg{width:17px;height:17px}.compat{font-size:11px;color:#71819a}.soon{color:#79b1ff;font-weight:700}
+    .visual{position:relative;min-height:420px;display:grid;place-items:center}
+    .orb{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle at 38% 34%,rgba(108,220,218,.25),rgba(51,108,203,.13) 35%,transparent 69%);filter:blur(8px);animation:breathe 7s ease-in-out infinite}
+    .app-window{position:relative;width:min(500px,100%);background:rgba(13,19,33,.92);border:1px solid rgba(152,183,231,.2);border-radius:20px;box-shadow:0 30px 100px rgba(0,0,0,.48),0 0 65px rgba(60,131,219,.13);overflow:hidden;transform:perspective(1100px) rotateY(-7deg) rotateX(2deg);animation:float 7s ease-in-out infinite}
+    .window-top{height:38px;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--line);background:#0b1120}.dot{width:7px;height:7px;border-radius:50%;background:#33435b}.window-name{margin:auto;font-size:9px;color:#697a94;padding-right:30px}
+    .mock{display:grid;grid-template-columns:105px 1fr;min-height:278px}.mock-side{border-right:1px solid var(--line);padding:16px 10px}.mock-logo{font:700 11px var(--display);margin-bottom:22px}.mock-nav{font-size:9px;color:#8090a7;padding:7px 8px;border-radius:7px;margin:3px 0}.mock-nav.active{background:#19273d;color:#a8caff}.mock-content{padding:19px 18px}.mock-heading{font:600 18px var(--display);margin-bottom:4px}.mock-sub{font-size:8px;color:#7c8ca3;margin-bottom:14px}
+    .mock-hero{height:90px;border-radius:11px;padding:13px;background:linear-gradient(110deg,#1d3651,#17263a 55%,#263c48);display:flex;justify-content:space-between;align-items:end;position:relative;overflow:hidden}.mock-hero:after{content:"";position:absolute;width:115px;height:115px;border-radius:50%;right:32px;top:-52px;background:radial-gradient(circle,#86d9d4aa,transparent 68%)}.mock-song{position:relative;z-index:1;font-size:10px;font-weight:700}.mock-song small{display:block;font-size:8px;color:#a5b5ca;font-weight:400}.mini-play{position:relative;z-index:1;border:0;background:#d8fff4;color:#0a2a27;width:28px;height:28px;border-radius:50%;font-weight:800}
+    .track{display:grid;grid-template-columns:23px 1fr 35px;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px solid rgba(157,181,220,.08);font-size:8px}.cover{width:22px;height:22px;border-radius:5px;background:linear-gradient(140deg,#568ca0,#273650)}.track:nth-child(3) .cover{background:linear-gradient(140deg,#a46b75,#453148)}.track:nth-child(4) .cover{background:linear-gradient(140deg,#8b804f,#293e44)}.track small{display:block;color:#71819a}.track time{color:#8290a4}
+    .mini-player{height:43px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#8190a5;font-size:8px}.equalizer{height:17px;display:flex;align-items:center;gap:2px}.equalizer i{display:block;width:3px;border-radius:3px;background:#76dede;animation:equalize .8s ease-in-out infinite alternate}.equalizer i:nth-child(2n){animation-delay:-.3s}.equalizer i:nth-child(3n){animation-delay:-.6s}
+    .float-chip{position:absolute;padding:10px 13px;background:#111b2a;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 35px #0006;color:#cad7e9;font-size:10px;font-weight:700;animation:float 5s ease-in-out infinite}.float-chip span{color:var(--green);margin-right:6px}.chip-one{top:45px;right:-12px}.chip-two{bottom:40px;left:-24px;animation-delay:-2.5s}
+    .section{padding:74px 0}.section-head{max-width:540px;margin-bottom:31px}.section-head h2{font:600 clamp(30px,4vw,43px)/1.1 var(--display);letter-spacing:-1.8px;margin:13px 0}.section-head p{font-size:14px;color:var(--muted)}
+    .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{min-height:197px;padding:23px;background:linear-gradient(145deg,rgba(18,27,44,.9),rgba(11,16,28,.86));border:1px solid var(--line);border-radius:17px;transition:transform .22s,border-color .22s}.feature:hover{transform:translateY(-4px);border-color:rgba(112,173,255,.37)}
+    .feature-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:rgba(87,147,255,.13);color:#82b4ff;margin-bottom:19px}.feature-icon svg{width:18px;height:18px}.feature h3{font:600 15px var(--display);margin:0 0 7px}.feature p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
+    .download-card{position:relative;overflow:hidden;border:1px solid rgba(111,161,234,.2);border-radius:22px;padding:36px;background:linear-gradient(115deg,#111c2c,#0e1522 65%,#152a32);display:flex;align-items:center;justify-content:space-between;gap:25px}.download-card:after{content:"";position:absolute;width:250px;height:250px;right:23%;top:-155px;background:radial-gradient(circle,rgba(90,177,198,.19),transparent 68%);pointer-events:none}.download-card h2{font:600 30px var(--display);letter-spacing:-1px;margin:8px 0}.download-card p{margin:0;color:var(--muted);font-size:13px}.download-card .button{position:relative;z-index:1;flex-shrink:0}
+    .platforms{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}.platform{font-size:10px;color:#aab8ca;padding:5px 9px;border:1px solid var(--line);border-radius:20px}.platform.next{color:#8da0b8}
+    .footer{margin-top:66px;border-top:1px solid var(--line);padding:25px 0 32px;display:flex;align-items:center;justify-content:space-between;color:#7c8ba2;font-size:11px}.footer-links{display:flex;gap:20px}.footer a:hover{color:#fff}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}.reveal.visible{opacity:1;transform:none}
+    @keyframes float{0%,100%{transform:perspective(1100px) rotateY(-7deg) rotateX(2deg) translateY(0)}50%{transform:perspective(1100px) rotateY(-5deg) rotateX(1deg) translateY(-9px)}}
+    @keyframes breathe{0%,100%{transform:scale(.94);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+    @keyframes equalize{from{height:4px}to{height:16px}}
+    @media(max-width:850px){.hero{grid-template-columns:1fr;gap:20px;padding:65px 0 50px}.hero-copy{max-width:560px}.visual{min-height:370px}.app-window{max-width:500px}.chip-one{right:4px}.chip-two{left:0}.feature-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.wrap{width:min(100% - 32px,1160px)}.nav{height:68px}.navlinks{gap:14px}.navlinks>a:not(.nav-cta){display:none}.nav-cta{font-size:11px;padding:9px 11px}.brand{font-size:16px}h1{font-size:53px;letter-spacing:-3px}.hero{padding-top:52px}.hero-copy{font-size:14px}.visual{min-height:320px}.app-window{transform:none;animation:none}.mock{grid-template-columns:86px 1fr;min-height:246px}.mock-side{padding:14px 7px}.mock-content{padding:15px 12px}.float-chip{font-size:9px}.chip-one{top:12px}.chip-two{bottom:10px}.section{padding:52px 0}.feature-grid{grid-template-columns:1fr}.feature{min-height:0}.download-card{padding:25px;align-items:flex-start;flex-direction:column}.download-card h2{font-size:26px}.footer{gap:15px;align-items:flex-start;flex-direction:column}.footer-links{gap:16px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <header class="wrap nav">
+    <a class="brand" href="#" aria-label="OutFix Player home"><img src="../logo.svg" alt=""><span>OutFix Player</span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="#features">Features</a><a href="#download">Download</a><a class="nav-cta" href="mailto:mostafamrbt7@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <div class="reveal">
+        <div class="eyebrow"><i class="live-dot"></i> A calmer way to listen</div>
+        <h1>Your sound.<br><em>Your space.</em></h1>
+        <p class="hero-copy">Bring your music, videos and playlists together in one beautifully focused desktop player. Pick a track, make it yours, and let the rest fade away.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="https://github.com/vexis-07/mupho/releases/latest/download/OutFix-Player-Setup-1.0.1.exe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 17v3h14v-3"/></svg>
+            Download for Windows
+          </a>
+          <a class="button secondary" href="https://github.com/vexis-07/mupho">Explore on GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="compat">Windows installer available <span aria-hidden="true">·</span> <span class="soon">macOS &amp; Linux coming soon</span></div>
+      </div>
+      <div class="visual reveal" aria-label="Preview of the OutFix Player app">
+        <div class="orb"></div>
+        <div class="app-window">
+          <div class="window-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="window-name">OutFix Player</span></div>
+          <div class="mock">
+            <aside class="mock-side"><div class="mock-logo">◈ &nbsp;OUTFIX</div><div class="mock-nav active">♫ &nbsp; Your library</div><div class="mock-nav">♡ &nbsp; Favorites</div><div class="mock-nav">▤ &nbsp; Playlists</div><div class="mock-nav">↓ &nbsp; Downloads</div></aside>
+            <div class="mock-content">
+              <div class="mock-heading">Your library</div><div class="mock-sub">A little room for every sound.</div>
+              <div class="mock-hero"><div class="mock-song">A softer kind of focus<small>Made for the in-between</small></div><button class="mini-play" aria-hidden="true">▶</button></div>
+              <div class="track"><i class="cover"></i><span>Open horizons<small>Night Drive · 2025</small></span><time>3:42</time></div>
+              <div class="track"><i class="cover"></i><span>Blue afterglow<small>Quiet Hours · 2024</small></span><time>4:08</time></div>
+              <div class="track"><i class="cover"></i><span>First light<small>Somewhere Else · 2025</small></span><time>2:56</time></div>
+            </div>
+          </div>
+          <div class="mini-player"><span>Open horizons &nbsp;·&nbsp; Night Drive</span><span class="equalizer"><i></i><i></i><i></i><i></i><i></i></span><span>♫ &nbsp; ━━━━━━━</span></div>
+        </div>
+        <div class="float-chip chip-one"><span>●</span> Your playlists, together</div>
+        <div class="float-chip chip-two">♫ &nbsp; One space for every sound</div>
+      </div>
+    </section>
+    <section class="wrap section" id="features">
+      <div class="section-head reveal"><div class="eyebrow">Made for your everyday</div><h2>Everything in its own rhythm.</h2><p>A simple home for the things you listen to and watch, with room to make the experience feel like yours.</p></div>
+      <div class="feature-grid">
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><h3>Music &amp; video player</h3><p>Keep your media library close and play your audio and video from one desktop app.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="11" cy="18" r="1" fill="currentColor"/></svg></div><h3>Your playlists</h3><p>Build playlists, save favorites and shape a library that feels like your own.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M5 17v3h14v-3"/></svg></div><h3>Download queue</h3><p>Manage media downloads and keep an eye on queued work from inside the app.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16M7 15l4-5 3 2 5-7"/></svg></div><h3>Live lyrics</h3><p>Follow along with lyrics while your track plays and keep the words in view.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></div><h3>Make it yours</h3><p>Choose a theme, adjust playback and settle into a setup that suits your mood.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8m-8 4h8m-8 4h5"/></svg></div><h3>Useful details</h3><p>Edit track details, explore your library and reach familiar controls from keyboard shortcuts.</p></article>
+      </div>
+    </section>
+    <section class="wrap section" id="download">
+      <div class="download-card reveal">
+        <div><div class="eyebrow"><i class="live-dot"></i> OutFix Player 1.0.1</div><h2>Make room for good sound.</h2><p>Get the Windows installer and start building your own listening space.</p><div class="platforms"><span class="platform">Windows · Available</span><span class="platform next">macOS · Coming soon</span><span class="platform next">Linux · Coming soon</span></div></div>
+        <a class="button primary" href="https://github.com/vexis-07/mupho/releases/latest/download/OutFix-Player-Setup-1.0.1.exe">Download installer <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer"><span>© 2026 OutFix Player</span><div class="footer-links"><a href="https://github.com/vexis-07/mupho">GitHub</a><a href="mailto:mostafamrbt7@gmail.com">mostafamrbt7@gmail.com</a></div></footer>
+  <script>
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      }), { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(item => observer.observe(item));
+    } else document.querySelectorAll('.reveal').forEach(item => item.classList.add('visible'));
+  </script>
+</body>
+</html>
